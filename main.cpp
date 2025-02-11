@@ -18,11 +18,13 @@ int main() {
         std::string partiallyGuessedWord = hangman.displayGuessedWord(word, guessedLetters);
         std::cout << "Слово с угаданными буквами (a): " << partiallyGuessedWord << std::endl;
 
-        // Пример: угаданы буквы 'a' и 'e'
-        guessedLetters.push_back('e');
-        std::string moreGuessedWord = hangman.displayGuessedWord(word, guessedLetters);
-        std::cout << "Слово с угаданными буквами (a, e): " << moreGuessedWord << std::endl;
+	// Пример использования getUserInput
+        char guessedLetter = hangman.getUserInput();
+        std::cout << "Вы ввели букву: " << guessedLetter << std::endl; //Проверка введенной буквы
 
+        guessedLetters.push_back(guessedLetter); // Добавляем введенную букву в список угаданных
+        partiallyGuessedWord = hangman.displayGuessedWord(word, guessedLetters);
+        std::cout << "Слово с угаданными буквами: " << partiallyGuessedWord << std::endl;	
 
     } catch (const std::runtime_error& error) {
         std::cerr << "Ошибка: " << error.what() << std::endl;

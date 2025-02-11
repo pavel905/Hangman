@@ -18,7 +18,8 @@ public:
 	
     // (Новый) Метод для отображения зашифрованного слова с учетом угаданных букв.
     std::string displayGuessedWord(const std::string& word, const std::vector<char>& guessedLetters);
-
+    
+	char getUserInput();
 private:
     // Вектор строк, содержащий словарь слов.
     std::vector<std::string> wordList;

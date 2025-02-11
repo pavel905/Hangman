@@ -41,3 +41,19 @@ std::string Hangman::displayGuessedWord(const std::string& word, const std::vect
     }
     return displayedWord;
 }
+
+char Hangman::getUserInput() {
+    std::string input;
+    while (true) {
+        std::cout << "Введите букву: ";
+        std::getline(std::cin, input); // Читаем строку, а не только символ
+
+        if (input.length() != 1) {
+            std::cout << "Пожалуйста, введите только одну букву." << std::endl;
+        } else if (!isalpha(input[0])) {
+            std::cout << "Пожалуйста, введите букву (a-z)." << std::endl;
+        } else {
+            return tolower(input[0]); // Возвращаем букву в нижнем регистре
+        }
+    }
+}
