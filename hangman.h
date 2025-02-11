@@ -3,12 +3,13 @@
 
 #include <string>
 #include <vector>
+#include <map> // Include для std::map
 
 class Hangman {
 public:
     // Конструктор класса Hangman.
     // Принимает вектор строк (словарь слов) для игры.
-    Hangman(const std::vector<std::string>& wordList);
+    Hangman(const std::map<std::string, std::vector<std::string>>& themes);
 
     // Метод для выбора случайного слова из словаря.
     std::string chooseWord();
@@ -28,12 +29,17 @@ public:
     // Метод для отрисовки виселицы.
     void drawHangman(int incorrectAttempts);
 
-    // (Новый) Метод для выбора сложности.
+    // Метод для выбора сложности.
     int chooseDifficulty();
 
-private:
-    // Вектор строк, содержащий словарь слов.
+    // (Новый) Метод для выбора темы слов.
+    std::string chooseTheme();
+
+    // Текущий список слов для игры.
     std::vector<std::string> wordList;
+private:
+    // Словарь тем (ключ - название темы, значение - вектор слов).
+    std::map<std::string, std::vector<std::string>> themes;
 };
 
 #endif

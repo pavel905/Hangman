@@ -1,17 +1,30 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <map>
 #include "hangman.h"
 
 int main() {
-    std::vector<std::string> words = {"apple", "banana", "cherry", "orange", "grape", "kiwi"};
-    Hangman hangman(words);
+    // Определяем темы и списки слов
+    std::map<std::string, std::vector<std::string>> themes = {
+        {"Animals", {"dog", "cat", "elephant", "lion", "tiger"}},
+        {"Fruits", {"apple", "banana", "cherry", "orange", "grape"}},
+        {"Countries", {"usa", "germany", "france", "japan", "china"}}
+    };
+
+    Hangman hangman(themes);
 
     bool playAgain = true;
 
     while (playAgain) {
         try {
-            int maxIncorrectAttempts = hangman.chooseDifficulty(); // Выбираем сложность перед каждой игрой
+            // Выбираем тему
+            std::string chosenTheme = hangman.chooseTheme();
+
+            // Устанавливаем список слов для выбранной темы
+            hangman.wordList = themes[chosenTheme];
+
+            int maxIncorrectAttempts = hangman.chooseDifficulty();
             std::string word = hangman.chooseWord();
             std::cout << "Загаданное слово (для отладки): " << word << std::endl;
 

@@ -4,8 +4,10 @@
 #include <iostream>
 #include <cctype>
 #include <string>
+#include <algorithm> // для std::find
 
-Hangman::Hangman(const std::vector<std::string>& wordList) : wordList(wordList) {}
+Hangman::Hangman(const std::map<std::string, std::vector<std::string>>& themes) : themes(themes) {
+}
 
 std::string Hangman::chooseWord() {
     if (wordList.empty()) {
@@ -162,7 +164,6 @@ void Hangman::drawHangman(int incorrectAttempts) {
 }
 
 int Hangman::chooseDifficulty() {
-    int difficulty;
     while (true) {
         std::cout << "Выберите сложность:" << std::endl;
         std::cout << "1 - Легкая (10 попыток)" << std::endl;
@@ -174,9 +175,13 @@ int Hangman::chooseDifficulty() {
         std::getline(std::cin, input);
 
         try {
-            difficulty = std::stoi(input); // Преобразуем строку в число
-            if (difficulty >= 1 && difficulty <= 3) {
-                break; // Выходим из цикла, если ввод корректный
+            int choice = std::stoi(input); // Преобразуем строку в число
+            if (choice >= 1 && choice <= 3) {
+                switch (choice) {
+                    case 1: return 10; // Легкая
+                    case 2: return 6;  // Средняя
+                    case 3: return 4;  // Тяжелая
+                }
             } else {
                 std::cout << "Некорректный ввод. Пожалуйста, введите число от 1 до 3." << std::endl;
             }
@@ -186,11 +191,34 @@ int Hangman::chooseDifficulty() {
             std::cout << "Слишком большое число. Пожалуйста, введите число от 1 до 3." << std::endl;
         }
     }
+}
 
-    switch (difficulty) {
-        case 1: return 10; // Легкая
-        case 2: return 6;  // Средняя
-        case 3: return 4;  // Тяжелая
-        default: return 6;  // По умолчанию - средняя
+std::string Hangman::chooseTheme() {
+    std::vector<std::string> themeNames;
+    int i = 1;
+    std::cout << "Выберите тему:" << std::endl;
+    for (const auto& pair : themes) {
+        std::cout << i++ << " - " << pair.first << std::endl;
+        themeNames.push_back(pair.first);
+    }
+    std::cout << "Введите номер темы: ";
+
+    std::string input;
+    std::getline(std::cin, input);
+
+    try {
+        int choice = std::stoi(input);
+        if (choice >= 1 && choice <= static_cast<int>(themes.size())) { // Преобразуем themes.size() к int
+            return themeNames[choice - 1];
+        } else {
+            std::cout << "Некорректный ввод. Пожалуйста, введите число от 1 до " << themes.size() << "." << std::endl;
+            return chooseTheme(); // Рекурсивный вызов, чтобы повторить выбор
+        }
+    } catch (const std::invalid_argument& e) {
+        std::cout << "Некорректный ввод. Пожалуйста, введите число." << std::endl;
+        return chooseTheme(); // Рекурсивный вызов
+    } catch (const std::out_of_range& e) {
+        std::cout << "Слишком большое число. Пожалуйста, введите число от 1 до " << themes.size() << "." << std::endl;
+        return chooseTheme(); // Рекурсивный вызов
     }
 }
