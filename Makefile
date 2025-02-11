@@ -1,18 +1,21 @@
-CXX = g++                       # Компилятор C++
-CXXFLAGS = -Wall -g        # Флаги компиляции (предупреждения, отладочная информация)
-TARGET = hangman             # Имя исполняемого файла
+CXX = g++
+CXXFLAGS = -Wall -g
+TARGET = hangman
 
-SOURCES = src/main.cpp src/hangman.cpp
-OBJECTS = $(SOURCES:.cpp=.o)
+SOURCES = main.cpp hangman.cpp
+OBJECTS = main.o hangman.o
 
 $(TARGET): $(OBJECTS)
-    $(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS) -lgtest -lgtest_main  # Линковка с Google Test
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS)
 
-%.o: %.cpp
-    $(CXX) $(CXXFLAGS) -c $< -o $@
+main.o: main.cpp
+	$(CXX) $(CXXFLAGS) -c main.cpp -o main.o
+
+hangman.o: hangman.cpp
+	$(CXX) $(CXXFLAGS) -c hangman.cpp -o hangman.o
 
 clean:
-    rm -f $(OBJECTS) $(TARGET)
+	rm -f $(OBJECTS) $(TARGET)
 
 run:
-    ./$(TARGET)
+	./$(TARGET)
