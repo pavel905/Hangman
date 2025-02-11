@@ -20,6 +20,7 @@ int main() {
         // Цикл игры: повторяем, пока слово не угадано или не исчерпаны попытки
         while (hiddenWord != word && incorrectAttempts < maxIncorrectAttempts) {
             hangman.drawHangman(incorrectAttempts); // Отрисовываем виселицу
+            std::cout << "Осталось попыток: " << maxIncorrectAttempts - incorrectAttempts << std::endl; // Показываем количество оставшихся попыток
 
             char guessedLetter = hangman.getUserInput(guessedLetters);
 
