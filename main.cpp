@@ -5,24 +5,22 @@
 #include "hangman.h"
 
 int main() {
-    // Определяем темы и списки слов
-    std::map<std::string, std::vector<std::string>> themes = {
-        {"Animals", {"dog", "cat", "elephant", "lion", "tiger"}},
-        {"Fruits", {"apple", "banana", "cherry", "orange", "grape"}},
-        {"Countries", {"usa", "germany", "france", "japan", "china"}}
+    // Определяем темы и файлы со словами
+    std::map<std::string, std::string> themeFiles = {
+        {"Animals", "animals.txt"},
+        {"Fruits", "fruits.txt"},
+        {"Countries", "countries.txt"}
     };
 
-    Hangman hangman(themes);
+    Hangman hangman(themeFiles);
 
     bool playAgain = true;
+    int totalScore = 0; // Инициализируем счет
 
     while (playAgain) {
         try {
-            // Выбираем тему
+            // Выбираем тему, которая также загружает слова из файла
             std::string chosenTheme = hangman.chooseTheme();
-
-            // Устанавливаем список слов для выбранной темы
-            hangman.wordList = themes[chosenTheme];
 
             int maxIncorrectAttempts = hangman.chooseDifficulty();
             std::string word = hangman.chooseWord();
@@ -56,9 +54,14 @@ int main() {
 
             if (hiddenWord == word) {
                 std::cout << "Поздравляем! Вы угадали слово: " << word << std::endl;
+                int score = maxIncorrectAttempts - incorrectAttempts; // Пример: очки = оставшиеся попытки
+                std::cout << "Вы получили " << score << " очков!" << std::endl;
+                totalScore += score; // Увеличиваем общий счет
             } else {
                 std::cout << "Вы проиграли! Загаданное слово было: " << word << std::endl;
             }
+
+            std::cout << "Ваш текущий счет: " << totalScore << std::endl;
 
             // Спрашиваем пользователя, хочет ли он сыграть еще раз
             std::string playAgainInput;
@@ -76,6 +79,7 @@ int main() {
     }
 
     std::cout << "Спасибо за игру!" << std::endl;
+    std::cout << "Ваш итоговый счет: " << totalScore << std::endl; // Выводим итоговый счет
 
     return 0;
 }

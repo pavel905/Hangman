@@ -4,9 +4,10 @@
 #include <iostream>
 #include <cctype>
 #include <string>
-#include <algorithm> // для std::find
+#include <algorithm>
+#include <fstream>
 
-Hangman::Hangman(const std::map<std::string, std::vector<std::string>>& themes) : themes(themes) {
+Hangman::Hangman(const std::map<std::string, std::string>& themeFiles) : themeFiles(themeFiles) {
 }
 
 std::string Hangman::chooseWord() {
@@ -29,7 +30,8 @@ std::string Hangman::getHiddenWord(const std::string& word) {
 
 std::string Hangman::displayGuessedWord(const std::string& word, const std::vector<char>& guessedLetters) {
     std::string displayedWord = "";
-    for (char letter : word) {
+    for (size_t i = 0; i < word.length(); ++i) {
+        char letter = word[i];
         bool guessed = false;
         for (char guessedLetter : guessedLetters) {
             if (tolower(letter) == tolower(guessedLetter)) {
@@ -38,9 +40,9 @@ std::string Hangman::displayGuessedWord(const std::string& word, const std::vect
             }
         }
         if (guessed) {
-            displayedWord += letter;
+            displayedWord += letter; // Добавляем угаданную букву
         } else {
-            displayedWord += '_';
+            displayedWord += '_'; // Добавляем символ "_"
         }
     }
     return displayedWord;
@@ -197,7 +199,7 @@ std::string Hangman::chooseTheme() {
     std::vector<std::string> themeNames;
     int i = 1;
     std::cout << "Выберите тему:" << std::endl;
-    for (const auto& pair : themes) {
+    for (const auto& pair : themeFiles) {
         std::cout << i++ << " - " << pair.first << std::endl;
         themeNames.push_back(pair.first);
     }
@@ -208,17 +210,36 @@ std::string Hangman::chooseTheme() {
 
     try {
         int choice = std::stoi(input);
-        if (choice >= 1 && choice <= static_cast<int>(themes.size())) { // Преобразуем themes.size() к int
-            return themeNames[choice - 1];
+        if (choice >= 1 && choice <= static_cast<int>(themeFiles.size())) { // Преобразуем themeFiles.size() к int
+            std::string chosenTheme = themeNames[choice - 1];
+            wordList = readWordsFromFile("themes/" + themeFiles[chosenTheme]); // Читаем слова из файла
+            return chosenTheme;
         } else {
-            std::cout << "Некорректный ввод. Пожалуйста, введите число от 1 до " << themes.size() << "." << std::endl;
+            std::cout << "Некорректный ввод. Пожалуйста, введите число от 1 до " << themeFiles.size() << "." << std::endl;
             return chooseTheme(); // Рекурсивный вызов, чтобы повторить выбор
         }
     } catch (const std::invalid_argument& e) {
         std::cout << "Некорректный ввод. Пожалуйста, введите число." << std::endl;
         return chooseTheme(); // Рекурсивный вызов
     } catch (const std::out_of_range& e) {
-        std::cout << "Слишком большое число. Пожалуйста, введите число от 1 до " << themes.size() << "." << std::endl;
+        std::cout << "Слишком большое число. Пожалуйста, введите число от 1 до " << themeFiles.size() << "." << std::endl;
         return chooseTheme(); // Рекурсивный вызов
     }
+}
+
+std::vector<std::string> Hangman::readWordsFromFile(const std::string& filename) {
+    std::vector<std::string> words;
+    std::ifstream file(filename);
+
+    if (file.is_open()) {
+        std::string word;
+        while (std::getline(file, word)) {
+            words.push_back(word);
+        }
+        file.close();
+    } else {
+        throw std::runtime_error("Не удалось открыть файл: " + filename);
+    }
+
+    return words;
 }

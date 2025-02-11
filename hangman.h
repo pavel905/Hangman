@@ -3,13 +3,13 @@
 
 #include <string>
 #include <vector>
-#include <map> // Include для std::map
+#include <map>
 
 class Hangman {
 public:
     // Конструктор класса Hangman.
-    // Принимает вектор строк (словарь слов) для игры.
-    Hangman(const std::map<std::string, std::vector<std::string>>& themes);
+    // Принимает словарь тем (ключ - название темы, значение - имя файла).
+    Hangman(const std::map<std::string, std::string>& themeFiles);
 
     // Метод для выбора случайного слова из словаря.
     std::string chooseWord();
@@ -32,14 +32,18 @@ public:
     // Метод для выбора сложности.
     int chooseDifficulty();
 
-    // (Новый) Метод для выбора темы слов.
+    // Метод для выбора темы слов.
     std::string chooseTheme();
+
+private:
+    // Словарь тем (ключ - название темы, значение - имя файла).
+    std::map<std::string, std::string> themeFiles;
 
     // Текущий список слов для игры.
     std::vector<std::string> wordList;
-private:
-    // Словарь тем (ключ - название темы, значение - вектор слов).
-    std::map<std::string, std::vector<std::string>> themes;
+
+    // (Новый) Метод для чтения слов из файла.
+    std::vector<std::string> readWordsFromFile(const std::string& filename);
 };
 
 #endif
