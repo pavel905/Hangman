@@ -22,3 +22,22 @@ std::string Hangman::chooseWord() {
 std::string Hangman::getHiddenWord(const std::string& word) {
     return std::string(word.length(), '_'); // Все символы - подчеркивания
 }
+
+std::string Hangman::displayGuessedWord(const std::string& word, const std::vector<char>& guessedLetters) {
+    std::string displayedWord = "";
+    for (char letter : word) {
+        bool guessed = false;
+        for (char guessedLetter : guessedLetters) {
+            if (tolower(letter) == tolower(guessedLetter)) { //Сравнение без учета регистра
+                guessed = true;
+                break;
+            }
+        }
+        if (guessed) {
+            displayedWord += letter;
+        } else {
+            displayedWord += '_';
+        }
+    }
+    return displayedWord;
+}

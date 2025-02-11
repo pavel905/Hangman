@@ -15,6 +15,9 @@ public:
 
     // (Опционально) Метод для получения зашифрованного слова (изначально все символы скрыты)
     std::string getHiddenWord(const std::string& word);
+	
+    // (Новый) Метод для отображения зашифрованного слова с учетом угаданных букв.
+    std::string displayGuessedWord(const std::string& word, const std::vector<char>& guessedLetters);
 
 private:
     // Вектор строк, содержащий словарь слов.
