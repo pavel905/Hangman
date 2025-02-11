@@ -7,25 +7,29 @@ int main() {
     Hangman hangman(words); // Создаем объект класса Hangman
 
     try {
-        std::string word = hangman.chooseWord(); // Вызываем метод через объект
+        std::string word = hangman.chooseWord();
         std::cout << "Загаданное слово (для отладки): " << word << std::endl;
 
         std::vector<char> guessedLetters;
-        std::string hiddenWord = hangman.displayGuessedWord(word, guessedLetters); // Вызываем метод через объект
+        std::string hiddenWord = hangman.displayGuessedWord(word, guessedLetters);
         std::cout << "Зашифрованное слово: " << hiddenWord << std::endl;
 
-        // Пример использования getUserInput и isLetterInWord
-        char guessedLetter = hangman.getUserInput(guessedLetters); // Вызываем метод через объект
+        // Цикл игры: повторяем, пока слово не угадано или не исчерпаны попытки (пока что без лимита попыток)
+        while (hiddenWord != word) { // Пока слово не угадано
+            char guessedLetter = hangman.getUserInput(guessedLetters);
 
-        if (hangman.isLetterInWord(guessedLetter, word)) { // Вызываем метод через объект
-            std::cout << "Буква '" << guessedLetter << "' есть в слове." << std::endl;
-        } else {
-            std::cout << "Буквы '" << guessedLetter << "' нет в слове." << std::endl;
+            if (hangman.isLetterInWord(guessedLetter, word)) {
+                std::cout << "Буква '" << guessedLetter << "' есть в слове." << std::endl;
+            } else {
+                std::cout << "Буквы '" << guessedLetter << "' нет в слове." << std::endl;
+            }
+
+            guessedLetters.push_back(guessedLetter);
+            hiddenWord = hangman.displayGuessedWord(word, guessedLetters); // Обновляем зашифрованное слово
+            std::cout << "Зашифрованное слово: " << hiddenWord << std::endl;
         }
 
-        guessedLetters.push_back(guessedLetter);
-        std::string partiallyGuessedWord = hangman.displayGuessedWord(word, guessedLetters); // Вызываем метод через объект
-        std::cout << "Слово с угаданными буквами: " << partiallyGuessedWord << std::endl;
+        std::cout << "Поздравляем! Вы угадали слово: " << word << std::endl;
 
     } catch (const std::runtime_error& error) {
         std::cerr << "Ошибка: " << error.what() << std::endl;
