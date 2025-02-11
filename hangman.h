@@ -20,10 +20,13 @@ public:
     std::string displayGuessedWord(const std::string& word, const std::vector<char>& guessedLetters);
 
     // Метод для получения корректного ввода от пользователя.
-    char getUserInput(const std::vector<char>& guessedLetters); // ИЗМЕНЕНО
+    char getUserInput(const std::vector<char>& guessedLetters);
 
-    // (Новый) Метод для проверки, есть ли буква в слове.
+    // Метод для проверки, есть ли буква в слове.
     bool isLetterInWord(char letter, const std::string& word);
+
+    // (Новый) Метод для отрисовки виселицы.
+    void drawHangman(int incorrectAttempts);
 
 private:
     // Вектор строк, содержащий словарь слов.

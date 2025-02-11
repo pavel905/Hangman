@@ -44,7 +44,7 @@ std::string Hangman::displayGuessedWord(const std::string& word, const std::vect
     return displayedWord;
 }
 
-char Hangman::getUserInput(const std::vector<char>& guessedLetters) { // ИЗМЕНЕНО
+char Hangman::getUserInput(const std::vector<char>& guessedLetters) {
     std::string input;
     while (true) {
         std::cout << "Введите букву: ";
@@ -82,4 +82,81 @@ bool Hangman::isLetterInWord(char letter, const std::string& word) {
         }
     }
     return false; // Буква не найдена в слове
+}
+
+void Hangman::drawHangman(int incorrectAttempts) {
+    switch (incorrectAttempts) {
+        case 0:
+            std::cout << "  +---+" << std::endl;
+            std::cout << "  |   |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "=========" << std::endl;
+            break;
+        case 1:
+            std::cout << "  +---+" << std::endl;
+            std::cout << "  |   |" << std::endl;
+            std::cout << "  O   |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "=========" << std::endl;
+            break;
+        case 2:
+            std::cout << "  +---+" << std::endl;
+            std::cout << "  |   |" << std::endl;
+            std::cout << "  O   |" << std::endl;
+            std::cout << "  |   |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "=========" << std::endl;
+            break;
+        case 3:
+            std::cout << "  +---+" << std::endl;
+            std::cout << "  |   |" << std::endl;
+            std::cout << "  O   |" << std::endl;
+            std::cout << " /|   |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "=========" << std::endl;
+            break;
+        case 4:
+            std::cout << "  +---+" << std::endl;
+            std::cout << "  |   |" << std::endl;
+            std::cout << "  O   |" << std::endl;
+            std::cout << " /|\\  |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "=========" << std::endl;
+            break;
+        case 5:
+            std::cout << "  +---+" << std::endl;
+            std::cout << "  |   |" << std::endl;
+            std::cout << "  O   |" << std::endl;
+            std::cout << " /|\\  |" << std::endl;
+            std::cout << " /    |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "=========" << std::endl;
+            break;
+        case 6:
+            std::cout << "  +---+" << std::endl;
+            std::cout << "  |   |" << std::endl;
+            std::cout << "  O   |" << std::endl;
+            std::cout << " /|\\  |" << std::endl;
+            std::cout << " / \\  |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "=========" << std::endl;
+            break;
+        default:
+            std::cout << "  +---+" << std::endl;
+            std::cout << "  |   |" << std::endl;
+            std::cout << "  X   |" << std::endl;
+            std::cout << " /|\\  |" << std::endl;
+            std::cout << " / \\  |" << std::endl;
+            std::cout << "      |" << std::endl;
+            std::cout << "=========" << std::endl;
+            break;
+    }
 }

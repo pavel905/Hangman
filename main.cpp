@@ -4,7 +4,7 @@
 
 int main() {
     std::vector<std::string> words = {"apple", "banana", "cherry"};
-    Hangman hangman(words); // Создаем объект класса Hangman
+    Hangman hangman(words);
 
     try {
         std::string word = hangman.chooseWord();
@@ -14,14 +14,20 @@ int main() {
         std::string hiddenWord = hangman.displayGuessedWord(word, guessedLetters);
         std::cout << "Зашифрованное слово: " << hiddenWord << std::endl;
 
-        // Цикл игры: повторяем, пока слово не угадано или не исчерпаны попытки (пока что без лимита попыток)
-        while (hiddenWord != word) { // Пока слово не угадано
+        int incorrectAttempts = 0; // Счетчик неправильных попыток
+        int maxIncorrectAttempts = 6; // Максимальное количество неправильных попыток
+
+        // Цикл игры: повторяем, пока слово не угадано или не исчерпаны попытки
+        while (hiddenWord != word && incorrectAttempts < maxIncorrectAttempts) {
+            hangman.drawHangman(incorrectAttempts); // Отрисовываем виселицу
+
             char guessedLetter = hangman.getUserInput(guessedLetters);
 
             if (hangman.isLetterInWord(guessedLetter, word)) {
                 std::cout << "Буква '" << guessedLetter << "' есть в слове." << std::endl;
             } else {
                 std::cout << "Буквы '" << guessedLetter << "' нет в слове." << std::endl;
+                incorrectAttempts++; // Увеличиваем счетчик неправильных попыток
             }
 
             guessedLetters.push_back(guessedLetter);
@@ -29,7 +35,13 @@ int main() {
             std::cout << "Зашифрованное слово: " << hiddenWord << std::endl;
         }
 
-        std::cout << "Поздравляем! Вы угадали слово: " << word << std::endl;
+        hangman.drawHangman(incorrectAttempts); // Отрисовываем финальную виселицу
+
+        if (hiddenWord == word) {
+            std::cout << "Поздравляем! Вы угадали слово: " << word << std::endl;
+        } else {
+            std::cout << "Вы проиграли! Загаданное слово было: " << word << std::endl;
+        }
 
     } catch (const std::runtime_error& error) {
         std::cerr << "Ошибка: " << error.what() << std::endl;
