@@ -1,7 +1,7 @@
 #include "hangman.h"
 #include <random>
 #include <stdexcept>
-#include <iostream> // Для отладочного вывода
+#include <iostream>            // Для отладочного вывода
 
 Hangman::Hangman(const std::vector<std::string>& wordList) : wordList(wordList) {}
 
