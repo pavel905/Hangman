@@ -1,0 +1,28 @@
+name: C++ CI
+
+on:
+  push:
+    branches: [ "main" ] # Запуск при push в ветку main
+  pull_request:
+    branches: [ "main" ] # Запуск при создании pull request в ветку main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Операционная система для сборки
+
+    steps:
+    - uses: actions/checkout@v3   # Клонирование репозитория
+    - name: Install dependencies # Установка зависимостей
+      run: sudo apt-get update && sudo apt-get install -y cmake g++ libgtest-dev
+
+    - name: Create Build Directory # Создание папки сборки
+      run: mkdir build
+
+    - name: Configure CMake # Конфигурация CMake
+      run: cmake -S . -B build
+
+    - name: Build # Сборка проекта
+      run: cmake --build build
+
+    - name: Run Tests # Запуск тестов (предполагается, что исполняемый файл с тестами называется hangman)
+      run: cd build && ./hangman
