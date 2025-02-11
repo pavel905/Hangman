@@ -36,7 +36,7 @@ int main() {
             std::cout << "Зашифрованное слово: " << hiddenWord << std::endl;
         }
 
-        hangman.drawHangman(incorrectAttempts); // Отрисовываем финальную виселицу
+        hangman.drawHangman(incorrectAttempts); //      Отрисовываем финальную виселицу
 
         if (hiddenWord == word) {
             std::cout << "Поздравляем! Вы угадали слово: " << word << std::endl;
