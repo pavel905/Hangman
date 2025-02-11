@@ -25,8 +25,11 @@ public:
     // Метод для проверки, есть ли буква в слове.
     bool isLetterInWord(char letter, const std::string& word);
 
-    // (Новый) Метод для отрисовки виселицы.
+    // Метод для отрисовки виселицы.
     void drawHangman(int incorrectAttempts);
+
+    // (Новый) Метод для выбора сложности.
+    int chooseDifficulty();
 
 private:
     // Вектор строк, содержащий словарь слов.

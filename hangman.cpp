@@ -160,3 +160,37 @@ void Hangman::drawHangman(int incorrectAttempts) {
             break;
     }
 }
+
+int Hangman::chooseDifficulty() {
+    int difficulty;
+    while (true) {
+        std::cout << "Выберите сложность:" << std::endl;
+        std::cout << "1 - Легкая (10 попыток)" << std::endl;
+        std::cout << "2 - Средняя (6 попыток)" << std::endl;
+        std::cout << "3 - Тяжелая (4 попытки)" << std::endl;
+        std::cout << "Введите номер сложности: ";
+
+        std::string input;
+        std::getline(std::cin, input);
+
+        try {
+            difficulty = std::stoi(input); // Преобразуем строку в число
+            if (difficulty >= 1 && difficulty <= 3) {
+                break; // Выходим из цикла, если ввод корректный
+            } else {
+                std::cout << "Некорректный ввод. Пожалуйста, введите число от 1 до 3." << std::endl;
+            }
+        } catch (const std::invalid_argument& e) {
+            std::cout << "Некорректный ввод. Пожалуйста, введите число." << std::endl;
+        } catch (const std::out_of_range& e) {
+            std::cout << "Слишком большое число. Пожалуйста, введите число от 1 до 3." << std::endl;
+        }
+    }
+
+    switch (difficulty) {
+        case 1: return 10; // Легкая
+        case 2: return 6;  // Средняя
+        case 3: return 4;  // Тяжелая
+        default: return 6;  // По умолчанию - средняя
+    }
+}

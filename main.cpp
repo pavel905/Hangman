@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <string> // Добавляем include для string
+#include <string>
 #include "hangman.h"
 
 int main() {
@@ -11,6 +11,7 @@ int main() {
 
     while (playAgain) {
         try {
+            int maxIncorrectAttempts = hangman.chooseDifficulty(); // Выбираем сложность перед каждой игрой
             std::string word = hangman.chooseWord();
             std::cout << "Загаданное слово (для отладки): " << word << std::endl;
 
@@ -19,7 +20,6 @@ int main() {
             std::cout << "Зашифрованное слово: " << hiddenWord << std::endl;
 
             int incorrectAttempts = 0;
-            int maxIncorrectAttempts = 6;
 
             while (hiddenWord != word && incorrectAttempts < maxIncorrectAttempts) {
                 hangman.drawHangman(incorrectAttempts);
@@ -53,16 +53,16 @@ int main() {
             std::getline(std::cin, playAgainInput);
 
             if (playAgainInput != "y") {
-                playAgain = false; // Если пользователь ввел что-то, отличное от "y", выходим из цикла
+                playAgain = false;
             }
 
         } catch (const std::runtime_error& error) {
             std::cerr << "Ошибка: " << error.what() << std::endl;
-            playAgain = false; // Если произошла ошибка, выходим из цикла
+            playAgain = false;
         }
     }
 
-    std::cout << "Спасибо за игру!" << std::endl; // Выводим сообщение о завершении игры
+    std::cout << "Спасибо за игру!" << std::endl;
 
     return 0;
 }
