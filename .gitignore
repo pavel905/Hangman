@@ -1,0 +1,28 @@
+#  Compiled object files
+*.o
+*.obj
+*.exe
+
+# Libraries
+*.so
+*.dylib
+*.a
+
+# Build folders
+build/
+out/
+Debug/
+Release/
+
+# IDE-specific files
+.idea/
+.vscode/
+*.suo
+*.user
+*.swp
+
+# OS generated files
+.DS_Store
+
+# Executables
+myprogram
